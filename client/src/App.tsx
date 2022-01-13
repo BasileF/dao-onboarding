@@ -1,23 +1,29 @@
-import logo from "./logo.svg";
 import "./App.css";
+import * as ROUTES from "./utils/routes";
+import { AuthConsumer, ProtectedRoute } from "./layers/auth";
+import { Route, Routes } from "react-router-dom";
+import Metamask from "./pages/metamask";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AuthConsumer>
+        {(authState) => (
+          <Routes>
+            <Route path={ROUTES.METAMASK} element={<Metamask />} />
+            <Route
+              path={ROUTES.DASHBOARD}
+              element={
+                <ProtectedRoute
+                  path={ROUTES.DASHBOARD}
+                  component={<Dashboard />}
+                />
+              }
+            />
+          </Routes>
+        )}
+      </AuthConsumer>
     </div>
   );
 }
