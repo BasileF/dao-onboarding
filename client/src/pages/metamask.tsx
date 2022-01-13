@@ -11,7 +11,7 @@ import { useState } from "react";
 import Web3 from "web3";
 import config from "../utils/config.js";
 
-let web3: any | undefined = undefined;
+let web3: Web3 | undefined = undefined;
 
 const Metamask = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const Metamask = () => {
   }: {
     publicAddress: string;
     signature: string;
-  }) => {
+  }) =>
     fetch(`${config.main_service_url}/auth`, {
       body: JSON.stringify({ publicAddress, signature }),
       headers: {
@@ -30,9 +30,8 @@ const Metamask = () => {
       },
       method: "POST",
     }).then((response) => response.json());
-  };
 
-  const handleSignup = (publicAddress: string) => {
+  const handleSignup = (publicAddress: string) =>
     fetch(`${config.main_service_url}/users`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
@@ -40,7 +39,6 @@ const Metamask = () => {
       },
       method: "POST",
     }).then((response) => response.json());
-  };
 
   const handleSignMessage = async ({
     publicAddress,
